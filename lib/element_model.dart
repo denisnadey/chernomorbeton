@@ -15,6 +15,7 @@ class ElementCard {
   late String categoryId;
   late String categoryName;
   late String type;
+  late String imagepath = "";
   late List<CategoryList> categoryList;
 
   final List<String> pathImageUrl = [
@@ -34,13 +35,13 @@ class ElementCard {
       {required this.categoryId,
       required this.categoryName,
       required this.type,
-      required this.imageuri,
       required this.categoryList});
 
   ElementCard.fromJson(Map<String, dynamic> json) {
     categoryName = json['category_name'];
     type = json['type'];
     categoryId = json['category_id'];
+    imagepath = getImageById(json['category_id'] as String);
     if (json['category_list'] != null) {
       categoryList = <CategoryList>[];
       json['category_list'].forEach((v) {
@@ -48,7 +49,7 @@ class ElementCard {
       });
     }
   }
-  String getImageById() {
+  String getImageById(String json) {
     switch (this.categoryId) {
       case "36":
         return pathImageUrl[ElementCardImages.rastvor.index];
