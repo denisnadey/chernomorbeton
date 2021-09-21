@@ -1,4 +1,4 @@
-import 'package:cbethonapp/bloc/entity_bloc.dart';
+import 'package:cbethonapp/bloc/logiccontroller/logiccontroller_bloc.dart';
 import 'package:cbethonapp/element_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,16 +10,17 @@ class ElementCardsPage extends StatefulWidget {
 }
 
 class EntityPageState extends State<ElementCardsPage> {
-  final EntityBloc _entityBloc = EntityBloc();
+  final LogiccontrollerBloc _logiccontrollerBloc = LogiccontrollerBloc();
+
   void initState() {
-    _entityBloc.add(LoadingEvent());
+    _logiccontrollerBloc.add(LoadingEvent());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => _entityBloc,
+      create: (context) => _logiccontrollerBloc,
       child: Scaffold(
         appBar: AppBar(
           title: Text("CHBD✌️"),
@@ -33,33 +34,35 @@ class EntityPageState extends State<ElementCardsPage> {
               child: Padding(
                 padding: const EdgeInsets.only(
                     top: 16, left: 30, right: 30, bottom: 16),
-                child: Center(child: BlocBuilder<EntityBloc, EntityState>(
+                child: Center(child:
+                    BlocBuilder<LogiccontrollerBloc, LogiccontrollerState>(
                   builder: (context, state) {
-                    if (state is EntityEmpty) {
-                      return Text("пусто");
-                    } else if (state is EntityLoaded) {
+                    if (state is Loadedcontroller) {
                       return ListView.separated(
-                        itemCount: state.elements.length,
+                        itemCount: state.elementcard.length,
                         itemBuilder: (BuildContext context, int index) {
-                          ElementCard _element = state.elements[index];
+                          ElementCard _element = state.elementcard[index];
                           return SimpleCard(element: _element);
                         },
                         separatorBuilder: (context, index) => SizedBox(
                           height: 16,
                         ),
                       );
-                    } else if (state is EntityLoading) {
+                    } else if (state is Loadingcontroller) {
                       return CircularProgressIndicator(
                         color: Colors.black12,
                       );
                     } else {
-                      return Text(state.toString());
+                      return Text('${state.toString()}',
+                          style: TextStyle(color: Colors.white, fontSize: 20));
                     }
                   },
                 )),
               ),
             ),
-            CustomButton()
+            CustomButton(
+              logiccontrollerBloc: _logiccontrollerBloc,
+            )
           ],
         )),
       ),
@@ -68,8 +71,10 @@ class EntityPageState extends State<ElementCardsPage> {
 }
 
 class CustomButton extends StatelessWidget {
+  final LogiccontrollerBloc logiccontrollerBloc;
   const CustomButton({
     Key? key,
+    required this.logiccontrollerBloc,
   }) : super(key: key);
 
   @override
@@ -102,7 +107,7 @@ class CustomButton extends StatelessWidget {
             ),
             child: InkWell(
               onTap: () {
-                print("object");
+                logiccontrollerBloc.add(RandomElement());
               },
               child: Container(
                 decoration: BoxDecoration(

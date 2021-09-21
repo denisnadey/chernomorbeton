@@ -1,11 +1,12 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:cbethonapp/element_model.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
-import '../http_service.dart';
-import '../element_model.dart';
+import '../../http_service.dart';
+
 part 'entity_event.dart';
 part 'entity_state.dart';
 
