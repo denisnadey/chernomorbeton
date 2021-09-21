@@ -25,118 +25,106 @@ class EntityPageState extends State<ElementCardsPage> {
         ),
         backgroundColor: Color(0xff43515a),
         body: Center(
-            child: Padding(
-          padding:
-              const EdgeInsets.only(top: 16, left: 30, right: 30, bottom: 16),
-          child: Center(child: BlocBuilder<EntityBloc, EntityState>(
-            builder: (context, state) {
-              if (state is EntityEmpty) {
-                return Text(state.toString());
-              } else if (state is EntityLoaded) {
-                return ListView.separated(
-                  clipBehavior: Clip.none,
-                  itemCount: state.elements.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    ElementCard _element = state.elements[index];
-                    return Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(11),
-                        color: Color(0xc1f7f7f7),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 15,
-                        vertical: 14,
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            child: Row(
+            child: Column(
+          children: [
+            SizedBox(
+              height: 450,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    top: 16, left: 30, right: 30, bottom: 16),
+                child: Center(child: BlocBuilder<EntityBloc, EntityState>(
+                  builder: (context, state) {
+                    if (state is EntityEmpty) {
+                      return Text(state.toString());
+                    } else if (state is EntityLoaded) {
+                      return ListView.separated(
+                        itemCount: state.elements.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          ElementCard _element = state.elements[index];
+                          return Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(11),
+                              color: Color(0xc1f7f7f7),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 15,
+                              vertical: 14,
+                            ),
+                            child: Column(
                               mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                  width: 68,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(13),
-                                  ),
-                                  child: Container(
-                                    clipBehavior: Clip.hardEdge,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(13),
-                                      color: Colors.white,
-                                    ),
-                                    child: Image.network(
-                                      _element.getImageById(),
-                                      fit: BoxFit.fill,
-                                      width: 68,
-                                      height: 68,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(width: 22),
-                                Container(
-                                  child: Column(
+                                  child: Row(
                                     mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Container(
-                                        child: SizedBox(
-                                          width: 163,
-                                          child: Text(
-                                            _element.categoryName,
-                                            style: TextStyle(
-                                              color: Color(0xff3b5779),
-                                              fontSize: 17,
-                                              fontFamily: "Roboto",
-                                              fontWeight: FontWeight.w500,
-                                            ),
+                                        width: 68,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(13),
+                                        ),
+                                        child: Container(
+                                          clipBehavior: Clip.hardEdge,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(13),
+                                            color: Colors.white,
+                                          ),
+                                          child: Image.network(
+                                            _element.getImageById(),
+                                            fit: BoxFit.fill,
+                                            width: 68,
+                                            height: 68,
                                           ),
                                         ),
                                       ),
-                                      SizedBox(height: 6),
+                                      SizedBox(width: 22),
                                       Container(
-                                        height: 41,
                                         child: Column(
+                                          mainAxisSize: MainAxisSize.min,
                                           mainAxisAlignment:
                                               MainAxisAlignment.end,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
-                                            Text(
-                                              "Единица измерения - ${_element.type}",
-                                              style: TextStyle(
-                                                color: Color(0xff3b5779),
-                                                fontSize: 12,
+                                            Container(
+                                              child: SizedBox(
+                                                width: 163,
+                                                child: Text(
+                                                  _element.categoryName,
+                                                  style: TextStyle(
+                                                    color: Color(0xff3b5779),
+                                                    fontSize: 17,
+                                                    fontFamily: "Roboto",
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                            SizedBox(height: 8),
+                                            SizedBox(height: 6),
                                             Container(
-                                              height: 19,
-                                              child: Row(
+                                              height: 41,
+                                              child: Column(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                                    MainAxisAlignment.end,
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.center,
                                                 children: [
+                                                  Text(
+                                                    "Единица измерения - ${_element.type}",
+                                                    style: TextStyle(
+                                                      color: Color(0xff3b5779),
+                                                      fontSize: 12,
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 8),
                                                   Container(
                                                     height: 19,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              9),
-                                                      color: Colors.white,
-                                                    ),
-                                                    padding: const EdgeInsets
-                                                        .symmetric(
-                                                      horizontal: 18,
-                                                      vertical: 3,
-                                                    ),
                                                     child: Row(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
@@ -145,16 +133,45 @@ class EntityPageState extends State<ElementCardsPage> {
                                                           CrossAxisAlignment
                                                               .center,
                                                       children: [
-                                                        Text(
-                                                          "Выберите наименование",
-                                                          style: TextStyle(
-                                                            color: Color(
-                                                                0xff3b5779),
-                                                            fontSize: 11,
-                                                            fontFamily:
-                                                                "Roboto",
-                                                            fontWeight:
-                                                                FontWeight.w300,
+                                                        Container(
+                                                          height: 19,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        9),
+                                                            color: Colors.white,
+                                                          ),
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                            horizontal: 18,
+                                                            vertical: 3,
+                                                          ),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Text(
+                                                                "Выберите наименование",
+                                                                style:
+                                                                    TextStyle(
+                                                                  color: Color(
+                                                                      0xff3b5779),
+                                                                  fontSize: 11,
+                                                                  fontFamily:
+                                                                      "Roboto",
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w300,
+                                                                ),
+                                                              ),
+                                                            ],
                                                           ),
                                                         ),
                                                       ],
@@ -171,24 +188,71 @@ class EntityPageState extends State<ElementCardsPage> {
                                 ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                    );
+                          );
+                        },
+                        separatorBuilder: (context, index) => SizedBox(
+                          height: 16,
+                        ),
+                      );
+                    } else if (state is EntityLoading) {
+                      return CircularProgressIndicator(
+                        color: Colors.black12,
+                      );
+                    } else {
+                      return Text(state.toString());
+                    }
                   },
-                  separatorBuilder: (context, index) => SizedBox(
-                    height: 16,
+                )),
+              ),
+            ),
+            Container(
+              width: 51,
+              height: 51,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 51,
+                    height: 51,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(42.50),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0x3f000000),
+                          blurRadius: 25,
+                          offset: Offset(0, 4),
+                        ),
+                      ],
+                      color: Colors.white,
+                    ),
+                    padding: const EdgeInsets.only(
+                      left: 9,
+                      right: 10,
+                      top: 10,
+                      bottom: 9,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 32,
+                          height: 32,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: FlutterLogo(size: 32),
+                        ),
+                      ],
+                    ),
                   ),
-                );
-              } else if (state is EntityLoading) {
-                return CircularProgressIndicator(
-                  color: Colors.black12,
-                );
-              } else {
-                return Text(state.toString());
-              }
-            },
-          )),
+                ],
+              ),
+            )
+          ],
         )),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
