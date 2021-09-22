@@ -15,7 +15,8 @@ class AddElement extends LogiccontrollerEvent {
 }
 
 class DeleteElement extends LogiccontrollerEvent {
-  const DeleteElement();
+  final ElementCard thiselem;
+  const DeleteElement(this.thiselem);
 }
 
 class EditElement extends LogiccontrollerEvent {

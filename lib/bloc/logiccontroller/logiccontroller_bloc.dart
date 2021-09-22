@@ -30,6 +30,12 @@ class LogiccontrollerBloc
         yield Loadedcontroller(allocatedElementCard, lastState.reference);
       }
     } else if (event is DeleteElement) {
+      if (lastState is Loadedcontroller) {
+        List<ElementCard> allocatedElementCard = lastState.elementcard;
+        allocatedElementCard
+            .removeAt(allocatedElementCard.indexOf(event.thiselem));
+        yield Loadedcontroller(allocatedElementCard, lastState.reference);
+      }
     } else if (event is EditElement) {
     } else if (event is LoadingEvent) {
       yield Loadingcontroller();
@@ -43,12 +49,14 @@ class LogiccontrollerBloc
       }
     } else if (event is RandomElement) {
       if (lastState is LoadedReference) {
+        yield Loadingcontroller();
         Random rndVal = Random();
         List<ElementCard> allocatedElementCard = [
           lastState.reference[rndVal.nextInt(lastState.reference.length - 1)]
         ];
         yield Loadedcontroller(allocatedElementCard, lastState.reference);
       } else if (lastState is Loadedcontroller) {
+        yield Loadingcontroller();
         Random rndVal = Random();
         List<ElementCard> allocatedElementCard = lastState.elementcard;
         allocatedElementCard.add(lastState
