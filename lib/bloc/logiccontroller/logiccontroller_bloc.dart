@@ -22,9 +22,11 @@ class LogiccontrollerBloc
 
     if (event is AddElement) {
       if (lastState is LoadedReference) {
+        print("added");
         List<ElementCard> emptyElementCard = [event.newcard];
         yield Loadedcontroller(emptyElementCard, lastState.reference);
       } else if (lastState is Loadedcontroller) {
+        print("added");
         List<ElementCard> allocatedElementCard = lastState.elementcard;
         allocatedElementCard.add(event.newcard);
         yield Loadedcontroller(allocatedElementCard, lastState.reference);
@@ -65,6 +67,6 @@ class LogiccontrollerBloc
         yield Loadedcontroller(allocatedElementCard, lastState.reference);
       }
     }
-    print("click");
+    print(state);
   }
 }

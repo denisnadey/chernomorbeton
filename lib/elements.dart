@@ -109,7 +109,73 @@ class CustomButton extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              logiccontrollerBloc.add(RandomElement());
+              showModalBottomSheet(
+                  backgroundColor: Colors.blue,
+                  context: context,
+                  builder: (context) {
+                    return BlocBuilder<LogiccontrollerBloc,
+                        LogiccontrollerState>(builder: (context, state) {
+                      if (state is LoadedReference) {
+                        return ListView.builder(
+                            itemCount: state.reference.length,
+                            itemBuilder: (context, index) {
+                              return Center(
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    InkWell(
+                                      onTap: () => {
+                                        logiccontrollerBloc.add(
+                                            AddElement(state.reference[index])),
+                                        Navigator.pop(context),
+                                      },
+                                      child: SimpleCardInChoice(
+                                          element: state.reference[index],
+                                          logiccontrollerBloc:
+                                              logiccontrollerBloc),
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    )
+                                  ],
+                                ),
+                              );
+                            });
+                      } else if (state is Loadedcontroller) {
+                        return ListView.builder(
+                            itemCount: state.reference.length,
+                            itemBuilder: (context, index) {
+                              return Center(
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    InkWell(
+                                      onTap: () => {
+                                        logiccontrollerBloc.add(
+                                            AddElement(state.reference[index])),
+                                        Navigator.pop(context),
+                                      },
+                                      child: SimpleCardInChoice(
+                                          element: state.reference[index],
+                                          logiccontrollerBloc:
+                                              logiccontrollerBloc),
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    )
+                                  ],
+                                ),
+                              );
+                            });
+                      } else {
+                        return Text("Ошибка!!!!!!!!!!!!!!");
+                      }
+                    });
+                  });
             },
             child: Container(
               decoration: BoxDecoration(
@@ -338,6 +404,190 @@ class SimpleCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class SimpleCardInChoice extends StatelessWidget {
+  final LogiccontrollerBloc logiccontrollerBloc;
+  const SimpleCardInChoice({
+    Key? key,
+    required ElementCard element,
+    required this.logiccontrollerBloc,
+  })  : _element = element,
+        super(key: key);
+
+  final ElementCard _element;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(11),
+        color: Color(0xc1f7f7f7),
+      ),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 15,
+        vertical: 14,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 68,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(13),
+                  ),
+                  child: Container(
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(13),
+                      color: Colors.white,
+                    ),
+                    child: Image.network(
+                      _element.imagepath,
+                      fit: BoxFit.fill,
+                      width: 68,
+                      height: 68,
+                    ),
+                  ),
+                ),
+                SizedBox(width: 22),
+                Container(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        child: SizedBox(
+                          width: 163,
+                          child: Text(
+                            _element.categoryName,
+                            style: TextStyle(
+                              color: Color(0xff3b5779),
+                              fontSize: 17,
+                              fontFamily: "Roboto",
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 6),
+                      Container(
+                        height: 41,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Единица измерения - ${_element.type}",
+                              style: TextStyle(
+                                color: Color(0xff3b5779),
+                                fontSize: 12,
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            InkWell(
+                              onTap: () {
+                                showModalBottomSheet(
+                                    context: context,
+                                    builder: (context) {
+                                      return SafeArea(
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  3,
+                                              child: ListView.builder(
+                                                itemCount: _element
+                                                    .categoryList.length,
+                                                itemBuilder: (context, index) {
+                                                  return ListTile(
+                                                    title: Text(_element
+                                                            .categoryList[index]
+                                                            .name +
+                                                        " " +
+                                                        _element
+                                                            .categoryList[index]
+                                                            .price +
+                                                        " руб"
+                                                            " за " +
+                                                        _element.type),
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 100,
+                                              height: 100,
+                                              color: Colors.red,
+                                            )
+                                          ],
+                                        ),
+                                      );
+                                    });
+                              },
+                              child: Container(
+                                height: 19,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      height: 19,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(9),
+                                        color: Colors.white,
+                                      ),
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 18,
+                                        vertical: 3,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "Выберите наименование",
+                                            style: TextStyle(
+                                              color: Color(0xff3b5779),
+                                              fontSize: 11,
+                                              fontFamily: "Roboto",
+                                              fontWeight: FontWeight.w300,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
