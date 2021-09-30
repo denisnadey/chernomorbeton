@@ -26,3 +26,9 @@ class EditElement extends LogiccontrollerEvent {
 class RandomElement extends LogiccontrollerEvent {
   const RandomElement();
 }
+
+class SelectElement extends LogiccontrollerEvent {
+  final CategoryList selectedElem;
+  final ElementCard touchElement;
+  const SelectElement(this.selectedElem, this.touchElement);
+}

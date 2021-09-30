@@ -296,7 +296,6 @@ class SimpleCard extends StatelessWidget {
                         ),
                         SizedBox(height: 6),
                         Container(
-                          height: 41,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -328,42 +327,45 @@ class SimpleCard extends StatelessWidget {
                                                       .categoryList.length,
                                                   itemBuilder:
                                                       (context, index) {
-                                                    return ListTile(
-                                                      title: Text(_element
-                                                              .categoryList[
-                                                                  index]
-                                                              .name +
-                                                          " " +
-                                                          _element
-                                                              .categoryList[
-                                                                  index]
-                                                              .price +
-                                                          " руб"
-                                                              " за " +
-                                                          _element.type),
+                                                    return InkWell(
+                                                      onTap: () {
+                                                        logiccontrollerBloc.add(
+                                                            SelectElement(
+                                                                _element.categoryList[
+                                                                    index],
+                                                                _element));
+                                                        Navigator.pop(context);
+                                                      },
+                                                      child: ListTile(
+                                                        title: Text(_element
+                                                                .categoryList[
+                                                                    index]
+                                                                .name +
+                                                            " " +
+                                                            _element
+                                                                .categoryList[
+                                                                    index]
+                                                                .price +
+                                                            " руб"
+                                                                " за " +
+                                                            _element.type),
+                                                      ),
                                                     );
                                                   },
                                                 ),
                                               ),
-                                              Container(
-                                                width: 100,
-                                                height: 100,
-                                                color: Colors.red,
-                                              )
                                             ],
                                           ),
                                         );
                                       });
                                 },
                                 child: Container(
-                                  height: 19,
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
                                       Container(
-                                        height: 19,
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(9),
@@ -379,13 +381,19 @@ class SimpleCard extends StatelessWidget {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
-                                            Text(
-                                              "Выберите наименование",
-                                              style: TextStyle(
-                                                color: Color(0xff3b5779),
-                                                fontSize: 11,
-                                                fontFamily: "Roboto",
-                                                fontWeight: FontWeight.w300,
+                                            Container(
+                                              width: 150,
+                                              child: Text(
+                                                _element.getCurrent()?.name ??
+                                                    "выберите значение",
+                                                style: TextStyle(
+                                                  color: Color(0xff3b5779),
+                                                  fontSize: 11,
+                                                  fontFamily: "Roboto",
+                                                  fontWeight: FontWeight.w300,
+                                                ),
+                                                overflow: TextOverflow.visible,
+                                                softWrap: true,
                                               ),
                                             ),
                                           ],
@@ -468,7 +476,7 @@ class SimpleCardInChoice extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
                         child: SizedBox(
@@ -488,96 +496,14 @@ class SimpleCardInChoice extends StatelessWidget {
                       Container(
                         height: 41,
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               "Единица измерения - ${_element.type}",
                               style: TextStyle(
                                 color: Color(0xff3b5779),
                                 fontSize: 12,
-                              ),
-                            ),
-                            SizedBox(height: 8),
-                            InkWell(
-                              onTap: () {
-                                showModalBottomSheet(
-                                    context: context,
-                                    builder: (context) {
-                                      return SafeArea(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            SizedBox(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  3,
-                                              child: ListView.builder(
-                                                itemCount: _element
-                                                    .categoryList.length,
-                                                itemBuilder: (context, index) {
-                                                  return ListTile(
-                                                    title: Text(_element
-                                                            .categoryList[index]
-                                                            .name +
-                                                        " " +
-                                                        _element
-                                                            .categoryList[index]
-                                                            .price +
-                                                        " руб"
-                                                            " за " +
-                                                        _element.type),
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                            Container(
-                                              width: 100,
-                                              height: 100,
-                                              color: Colors.red,
-                                            )
-                                          ],
-                                        ),
-                                      );
-                                    });
-                              },
-                              child: Container(
-                                height: 19,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      height: 19,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(9),
-                                        color: Colors.white,
-                                      ),
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 18,
-                                        vertical: 3,
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            "Выберите наименование",
-                                            style: TextStyle(
-                                              color: Color(0xff3b5779),
-                                              fontSize: 11,
-                                              fontFamily: "Roboto",
-                                              fontWeight: FontWeight.w300,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
                               ),
                             ),
                           ],

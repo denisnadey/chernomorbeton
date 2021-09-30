@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'dart:math';
 
 import 'package:bloc/bloc.dart';
@@ -63,6 +64,14 @@ class LogiccontrollerBloc
             .reference[rndVal.nextInt(lastState.reference.length - 1)]);
 
         yield Loadedcontroller(allocatedElementCard, lastState.reference);
+      }
+    } else if (event is SelectElement) {
+      CategoryList tmpElem = event.selectedElem;
+      ElementCard touchElement = event.touchElement;
+      if (lastState is Loadedcontroller) {
+        final List<ElementCard> tmplist = lastState.elementcard;
+        tmplist[tmplist.indexOf(touchElement)].setCurrent(tmpElem);
+        yield Loadedcontroller(tmplist, lastState.reference);
       }
     }
   }
