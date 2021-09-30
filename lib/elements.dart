@@ -109,72 +109,74 @@ class CustomButton extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              showModalBottomSheet(
+              showModalBottomSheet<void>(
                   backgroundColor: Colors.blue,
                   context: context,
-                  builder: (context) {
-                    return BlocBuilder<LogiccontrollerBloc,
-                        LogiccontrollerState>(builder: (context, state) {
-                      if (state is LoadedReference) {
-                        return ListView.builder(
-                            itemCount: state.reference.length,
-                            itemBuilder: (context, index) {
-                              return Center(
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 8,
+                  builder: (_) {
+                    return BlocProvider.value(
+                        value: context.read<LogiccontrollerBloc>(),
+                        child: BlocBuilder<LogiccontrollerBloc,
+                            LogiccontrollerState>(builder: (context, state) {
+                          if (state is LoadedReference) {
+                            return ListView.builder(
+                                itemCount: state.reference.length,
+                                itemBuilder: (context, index) {
+                                  return Center(
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        InkWell(
+                                          onTap: () => {
+                                            logiccontrollerBloc.add(AddElement(
+                                                state.reference[index])),
+                                            Navigator.pop(context),
+                                          },
+                                          child: SimpleCardInChoice(
+                                              element: state.reference[index],
+                                              logiccontrollerBloc:
+                                                  logiccontrollerBloc),
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        )
+                                      ],
                                     ),
-                                    InkWell(
-                                      onTap: () => {
-                                        logiccontrollerBloc.add(
-                                            AddElement(state.reference[index])),
-                                        Navigator.pop(context),
-                                      },
-                                      child: SimpleCardInChoice(
-                                          element: state.reference[index],
-                                          logiccontrollerBloc:
-                                              logiccontrollerBloc),
+                                  );
+                                });
+                          } else if (state is Loadedcontroller) {
+                            return ListView.builder(
+                                itemCount: state.reference.length,
+                                itemBuilder: (context, index) {
+                                  return Center(
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        InkWell(
+                                          onTap: () => {
+                                            logiccontrollerBloc.add(AddElement(
+                                                state.reference[index])),
+                                            Navigator.pop(context),
+                                          },
+                                          child: SimpleCardInChoice(
+                                              element: state.reference[index],
+                                              logiccontrollerBloc:
+                                                  logiccontrollerBloc),
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        )
+                                      ],
                                     ),
-                                    SizedBox(
-                                      height: 8,
-                                    )
-                                  ],
-                                ),
-                              );
-                            });
-                      } else if (state is Loadedcontroller) {
-                        return ListView.builder(
-                            itemCount: state.reference.length,
-                            itemBuilder: (context, index) {
-                              return Center(
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 8,
-                                    ),
-                                    InkWell(
-                                      onTap: () => {
-                                        logiccontrollerBloc.add(
-                                            AddElement(state.reference[index])),
-                                        Navigator.pop(context),
-                                      },
-                                      child: SimpleCardInChoice(
-                                          element: state.reference[index],
-                                          logiccontrollerBloc:
-                                              logiccontrollerBloc),
-                                    ),
-                                    SizedBox(
-                                      height: 8,
-                                    )
-                                  ],
-                                ),
-                              );
-                            });
-                      } else {
-                        return Text("Ошибка!!!!!!!!!!!!!!");
-                      }
-                    });
+                                  );
+                                });
+                          } else {
+                            return Text("Ошибка!!!!!!!!!!!!!!");
+                          }
+                        }));
                   });
             },
             child: Container(
