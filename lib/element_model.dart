@@ -17,6 +17,7 @@ class ElementCard {
   late String type;
   late String imagepath = "";
   late List<CategoryList> categoryList;
+  late CategoryList _selectedElement;
 
   final List<String> pathImageUrl = [
     "https://chernomorbeton.ru/wp-content/uploads/2018/11/kupit-cementnyj-rastvor-v-anape-i-anapskom-rajone.jpg", //rastvor,
@@ -74,6 +75,14 @@ class ElementCard {
     }
 
     return "https://chernomorbeton.ru/wp-content/uploads/2018/11/about-us.jpg";
+  }
+
+  void setCurrent(CategoryList current) {
+    this._selectedElement = current;
+  }
+
+  CategoryList getCurrent() {
+    return this._selectedElement;
   }
 }
 
